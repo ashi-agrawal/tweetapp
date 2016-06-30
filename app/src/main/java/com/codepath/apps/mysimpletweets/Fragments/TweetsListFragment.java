@@ -44,4 +44,10 @@ public class TweetsListFragment extends Fragment {
         aTweets.addAll(tweets);
 
     }
+
+    public void addTweetToStart(Tweet tweet){
+        tweetsArray.add(0, tweet);
+        aTweets.notifyDataSetChanged();
+        lvTweets.setSelection(0);
+    }
 }
