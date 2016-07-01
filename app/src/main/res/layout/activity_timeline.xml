@@ -7,6 +7,11 @@
     tools:context=".Activities.TimelineActivity">
 
     <com.astuetz.PagerSlidingTabStrip
+        android:textColor="#55acee"
+        android:background="#ffffff"
+        app:pstsIndicatorColor="#55acee"
+        app:pstsUnderlineColor="#55acee"
+        app:pstsDividerColor="#55acee"
         android:id="@+id/tabs"
         app:pstsShouldExpand="true"
         app:pstsTextAllCaps="true"

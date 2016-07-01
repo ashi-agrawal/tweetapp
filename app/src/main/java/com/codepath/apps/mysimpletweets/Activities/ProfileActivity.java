@@ -6,13 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.mysimpletweets.Fragments.UserTimelineFragment;
 import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.TwitterApplication;
 import com.codepath.apps.mysimpletweets.TwitterClient;
 import com.codepath.apps.mysimpletweets.models.User;
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
 
@@ -55,8 +55,8 @@ public class ProfileActivity extends AppCompatActivity {
     private void populateProfileHeader(User user) {
         tvName.setText(user.getName());
         tvTagline.setText(user.getTagline());
-        tvFollowers.setText(user.getFollowersCount() + "Followers");
-        tvFollowing.setText(user.getFollowingsCount() + "Following");
-        Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
+        tvFollowers.setText(user.getFollowersCount() + " Followers");
+        tvFollowing.setText(user.getFollowingsCount() + " Following");
+        Glide.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
     }
 }

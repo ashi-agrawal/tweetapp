@@ -8,13 +8,14 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.apps.mysimpletweets.models.Tweet;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * Created by ashiagrawal on 6/28/16.
@@ -42,7 +43,7 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
         holder.ivProfImage.setImageResource(android.R.color.transparent);
         String formattedTime = TimeFormatter.getTimeDifference(tweet.getCreatedAt());
         holder.tvTime.setText(formattedTime);
-        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(holder.ivProfImage);
+        Glide.with(getContext()).load(tweet.getUser().getProfileImageUrl()).bitmapTransform(new RoundedCornersTransformation(this.getContext(), 10, 0)).into(holder.ivProfImage);
         return convertView;
     }
 

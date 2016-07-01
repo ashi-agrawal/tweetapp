@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,6 +41,7 @@ public class TimelineActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         return true;
     }
 
@@ -55,8 +57,9 @@ public class TimelineActivity extends AppCompatActivity {
 
     public void onProfileView (View view) {
         Intent i = new Intent(this, ProfileActivity.class);
-        TextView tvUsername = (TextView) findViewById(R.id.tvName);
+        TextView tvUsername = (TextView) findViewById(R.id.tvUsername);
         i.putExtra("username", tvUsername.getText().toString());
+        Log.d("username", tvUsername.getText().toString());
         startActivity(i);
     }
 
