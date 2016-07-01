@@ -13,11 +13,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by ashiagrawal on 6/28/16.
  */
 
-//ViewHolder this
 public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
 
     public TweetsArrayAdapter(Context context, List<Tweet> tweets) {
@@ -25,17 +27,34 @@ public class TweetsArrayAdapter extends ArrayAdapter<Tweet> {
     }
 
     public View getView(int position, View convertView, ViewGroup parent){
-        Tweet tweet = getItem(position);
-        if (convertView == null){
+        ViewHolder holder;
+        if (convertView != null){
+            holder = (ViewHolder) convertView.getTag();
+        } else {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_tweet, parent, false);
+            holder = new ViewHolder(convertView);
+            convertView.setTag(holder);
         }
-        ImageView ivProfImage = (ImageView) convertView.findViewById(R.id.ivProfImage);
-        TextView tvUsername = (TextView) convertView.findViewById(R.id.tvUsername);
-        TextView tvBody = (TextView) convertView.findViewById(R.id.tvBody);
-        tvUsername.setText(tweet.getUser().getScreenName());
-        tvBody.setText(tweet.getBody());
-        ivProfImage.setImageResource(android.R.color.transparent);
-        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(ivProfImage);
+        Tweet tweet = getItem(position);
+        holder.tvUsername.setText("@" + tweet.getUser().getScreenName());
+        holder.tvName.setText(tweet.getUser().getName());
+        holder.tvBody.setText(tweet.getBody());
+        holder.ivProfImage.setImageResource(android.R.color.transparent);
+        String formattedTime = TimeFormatter.getTimeDifference(tweet.getCreatedAt());
+        holder.tvTime.setText(formattedTime);
+        Picasso.with(getContext()).load(tweet.getUser().getProfileImageUrl()).into(holder.ivProfImage);
         return convertView;
+    }
+
+    static class ViewHolder {
+        @BindView(R.id.ivProfImage) ImageView ivProfImage;
+        @BindView(R.id.tvUsername) TextView tvUsername;
+        @BindView(R.id.tvBody) TextView tvBody;
+        @BindView(R.id.tvTime) TextView tvTime;
+        @BindView(R.id.tvName) TextView tvName;
+
+        public ViewHolder(View view) {
+            ButterKnife.bind(this, view);
+        }
     }
 }

@@ -8,6 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.codepath.apps.mysimpletweets.Fragments.HomeTimelineFragment;
@@ -16,18 +18,22 @@ import com.codepath.apps.mysimpletweets.R;
 import com.codepath.apps.mysimpletweets.SmartFragmentStatePagerAdapter;
 import com.codepath.apps.mysimpletweets.models.Tweet;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class TimelineActivity extends AppCompatActivity {
     int REQUEST_CODE = 8;
     TweetsPagerAdapter adapterViewPager;
+    @BindView(R.id.viewpager) ViewPager vpPager;
+    @BindView(R.id.tabs) PagerSlidingTabStrip tabStrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        ButterKnife.bind(this);
         adapterViewPager = new TweetsPagerAdapter(getSupportFragmentManager());
         vpPager.setAdapter(adapterViewPager);
-        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabStrip.setViewPager(vpPager);
     }
 
@@ -44,6 +50,13 @@ public class TimelineActivity extends AppCompatActivity {
 
     public void onProfileView (MenuItem mi) {
         Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
+    }
+
+    public void onProfileView (View view) {
+        Intent i = new Intent(this, ProfileActivity.class);
+        TextView tvUsername = (TextView) findViewById(R.id.tvName);
+        i.putExtra("username", tvUsername.getText().toString());
         startActivity(i);
     }
 
@@ -79,7 +92,6 @@ public class TimelineActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // REQUEST_CODE is defined above
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE) {
             Tweet tweet = (Tweet) data.getExtras().getSerializable("tweet");
             HomeTimelineFragment fragmentHomeTweets =
